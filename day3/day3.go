@@ -18,7 +18,7 @@ func p1(values []string) int64 {
 	for _, value := range values {
 		parts := strings.Split(value, "")
 		for i, bit := range parts {
-			if bit != "0" {
+			if bit == "1" {
 				ones[i]++
 			}
 		}
