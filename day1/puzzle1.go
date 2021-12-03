@@ -1,10 +1,10 @@
 package main
 
 import (
-    "bufio"
-    "fmt"
-    "os"
-    "strconv"
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
 )
 
 func read(path string) []int {
@@ -14,7 +14,7 @@ func read(path string) []int {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-	for scanner.Scan(){
+	for scanner.Scan() {
 		value, _ := strconv.Atoi(scanner.Text())
 		lines = append(lines, value)
 	}
@@ -36,7 +36,7 @@ func calculateIncrements(values []int, offset int) int {
 
 func main() {
 	lines := read("values")
-	
+
 	fmt.Println("https://adventofcode.com/2021/day/1")
 	fmt.Printf("Day 1, part 1: %v\n", calculateIncrements(lines, 1))
 	fmt.Printf("Day 1, part 2: %v\n", calculateIncrements(lines, 3))
