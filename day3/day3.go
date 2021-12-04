@@ -40,9 +40,10 @@ func mostOrLeastCommon(integers []int, mostCommon bool) int {
 	columnCounts := make([]int, bits)
 
 	for bit := 0; bit < bits; bit++ {
-		// Mask offset by 1 each time (from rhs), keep reducing its length
+		// Shift mask by 1 each time (from rhs), reducing its length
 		mask := 1 << (bits - bit - 1)
 		for _, integer := range integers {
+			// Masking << [n] accumulating by column [0] >>
 			if integer&mask > 0 {
 				columnCounts[bit]++
 			} else {
