@@ -13,7 +13,14 @@ func ReadStrings(path string) []string {
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
+		t := scanner.Text()
+		lines = append(lines, t)
+	}
+
+	for i := 0; i < len(lines); i++ {
+		if lines[i] == "" {
+			lines = append(lines[:i], lines[i+1:]...)
+		}
 	}
 
 	return lines
