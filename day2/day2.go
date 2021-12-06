@@ -14,7 +14,6 @@ func main() {
 
 func calculatePath(values []string, withAim bool) int {
 	var x, y, aim int
-
 	for _, command := range values {
 		parts := strings.Split(command, " ")
 		direction := fmt.Sprint(parts[0])
