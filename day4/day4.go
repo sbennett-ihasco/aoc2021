@@ -31,8 +31,8 @@ func main() {
 		}
 	}
 
-	fmt.Printf("Value 1: %v\n", play(numbers, boards, scoreCards, true))
-	fmt.Printf("Value 2: %v\n", play(numbers, boards, scoreCards, false))
+	fmt.Println(play(numbers, boards, scoreCards, true))
+	fmt.Println(play(numbers, boards, scoreCards, false))
 }
 
 func play(numbers []int, boards []Board, scoreCards []ScoreCard, stopOnFirstWin bool) (score int) {
@@ -92,7 +92,7 @@ func win(scoreCard ScoreCard) (won bool) {
 			}
 		}
 	}
-	return
+	return won
 }
 
 func calculateScore(scoreCard ScoreCard, board Board, number int) int {
@@ -115,7 +115,7 @@ func parseNumbers(lines []string) (numbers []int) {
 		integer, _ := strconv.Atoi(part)
 		numbers[i] = integer
 	}
-	return
+	return numbers
 }
 
 func parseBoardNumbers(line string) (boardNumbers []int) {
@@ -125,5 +125,5 @@ func parseBoardNumbers(line string) (boardNumbers []int) {
 		integer, _ := strconv.Atoi(split)
 		boardNumbers[i] = integer
 	}
-	return
+	return boardNumbers
 }

@@ -1,4 +1,4 @@
-package day2
+package main
 
 import (
 	"fmt"
@@ -6,6 +6,16 @@ import (
 	"strconv"
 	"strings"
 )
+
+const Forward = "forward"
+const Up = "up"
+const Down = "down"
+
+func main() {
+	input := common.ReadStrings("day2.values")
+	fmt.Println(calculatePath(input, false))
+	fmt.Println(calculatePath(input, true))
+}
 
 func calculatePath(values []string, withAim bool) int {
 	x := 0
@@ -17,36 +27,26 @@ func calculatePath(values []string, withAim bool) int {
 		direction := fmt.Sprint(parts[0])
 		steps, _ := strconv.Atoi(parts[1])
 
-		if withAim == false {
-
-			if direction == "forward" {
-				x += steps
-			} else if direction == "up" {
-				y -= steps
-			} else if direction == "down" {
-				y += steps
-			}
-
-		} else {
-
-			if direction == "forward" {
+		if withAim {
+			switch direction {
+			case Forward:
 				x += steps
 				y += aim * steps
-			} else if direction == "up" {
+			case Up:
 				aim -= steps
-			} else if direction == "down" {
+			case Down:
 				aim += steps
+			}
+		} else {
+			switch direction {
+			case Forward:
+				x += steps
+			case Up:
+				y -= steps
+			case Down:
+				y += steps
 			}
 		}
 	}
-
 	return x * y
-}
-
-func main() {
-	lines := common.ReadStrings("day2.values")
-
-	fmt.Println("https://adventofcode.com/2021/day/1")
-	fmt.Printf("Day 2, part 1: %v\n", calculatePath(lines, false))
-	fmt.Printf("Day 1, part 2: %v\n", calculatePath(lines, true))
 }
