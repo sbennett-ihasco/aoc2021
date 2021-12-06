@@ -7,11 +7,11 @@ import (
 	"strings"
 )
 
-const CardSize = 5
+const GridSize = 5
 const BoardCount = 100
 
 type Board [][]int
-type ScoreCard [CardSize][CardSize]int
+type ScoreCard [GridSize][GridSize]int
 
 func main() {
 	input := common.ReadStrings("input.txt")
@@ -23,7 +23,7 @@ func main() {
 	var scoreCards = make([]ScoreCard, BoardCount)
 	k := 0
 	for i := range boards {
-		boards[i] = make(Board, CardSize)
+		boards[i] = make(Board, GridSize)
 		scoreCards[i] = ScoreCard{}
 		for j := range boards[i] {
 			boards[i][j] = parseBoardNumbers(input[k])
@@ -42,7 +42,7 @@ func play(numbers []int, boards []Board, scoreCards []ScoreCard, stopOnFirstWin 
 		for i, board := range boards {
 		NextBoard:
 			for j := range board {
-				for k := 0; k < CardSize; k++ {
+				for k := 0; k < GridSize; k++ {
 					if board[j][k] == number {
 						scoreCards[i][j][k] = 1
 						if win(scoreCards[i]) {
@@ -69,22 +69,22 @@ func play(numbers []int, boards []Board, scoreCards []ScoreCard, stopOnFirstWin 
 func win(scoreCard ScoreCard) (won bool) {
 	for _, rowScores := range scoreCard {
 		rowTotal := 0
-		for i := 0; i < CardSize; i++ {
+		for i := 0; i < GridSize; i++ {
 			if rowScores[i] == 1 {
 				rowTotal++
 			}
-			if rowTotal == CardSize {
+			if rowTotal == GridSize {
 				won = true
 			}
 		}
 
-		columnTotal := make([]int, CardSize)
-		for i := 0; i < CardSize; i++ {
+		columnTotal := make([]int, GridSize)
+		for i := 0; i < GridSize; i++ {
 			for j, colScores := range scoreCard {
 				if colScores[j] == 1 {
 					columnTotal[i]++
 				}
-				if columnTotal[i] == CardSize {
+				if columnTotal[i] == GridSize {
 					won = true
 				}
 			}
@@ -117,7 +117,7 @@ func parseNumbers(lines []string) (numbers []int) {
 }
 
 func parseBoardNumbers(line string) (boardNumbers []int) {
-	boardNumbers = make([]int, CardSize)
+	boardNumbers = make([]int, GridSize)
 	line = strings.Trim(strings.Replace(line, "  ", " ", -1), " ")
 	for i, split := range strings.Split(line, " ") {
 		integer, _ := strconv.Atoi(split)
