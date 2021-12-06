@@ -7,8 +7,11 @@ import (
 	"strings"
 )
 
+const CardSize = 5
+const BoardCount = 100
+
 type Board [][]int
-type ScoreCard [5][5]int
+type ScoreCard [CardSize][CardSize]int
 
 func main() {
 	input := common.ReadStrings("day4.values")
@@ -16,11 +19,11 @@ func main() {
 	numbers := parseNumbers(input)
 	input = input[1:]
 
-	var boards = make([]Board, 100)
-	var scoreCards = make([]ScoreCard, 100)
+	var boards = make([]Board, BoardCount)
+	var scoreCards = make([]ScoreCard, BoardCount)
 	k := 0
 	for i := range boards {
-		boards[i] = make(Board, 5)
+		boards[i] = make(Board, CardSize)
 		scoreCards[i] = ScoreCard{}
 		for j := range boards[i] {
 			boards[i][j] = parseBoardNumbers(input[k])
@@ -32,16 +35,16 @@ func main() {
 	fmt.Printf("Value 2: %v\n", play(numbers, boards, scoreCards, false))
 }
 
-func play(numbers []int, boards []Board, scoreCards []ScoreCard, stopOnFirstWin bool) int {
-	score := 0
+func play(numbers []int, boards []Board, scoreCards []ScoreCard, stopOnFirstWin bool) (score int) {
+	score = 0
 	scoreCount := 0
 	var scores []int
 
 	for _, number := range numbers {
-	NextBoard:
 		for i, board := range boards {
+		NextBoard:
 			for j := range board {
-				for k := 0; k < 5; k++ {
+				for k := 0; k < CardSize; k++ {
 					if board[j][k] == number {
 						scoreCards[i][j][k] = 1
 						if win(scoreCards[i]) {
@@ -65,32 +68,31 @@ func play(numbers []int, boards []Board, scoreCards []ScoreCard, stopOnFirstWin 
 	return score
 }
 
-func win(scoreCard ScoreCard) bool {
-
+func win(scoreCard ScoreCard) (won bool) {
 	for _, rowScores := range scoreCard {
 		rowTotal := 0
-		for i := 0; i < 5; i++ {
+		for i := 0; i < CardSize; i++ {
 			if rowScores[i] == 1 {
 				rowTotal++
 			}
-			if rowTotal == 5 {
-				return true
+			if rowTotal == CardSize {
+				won = true
 			}
 		}
 
-		columnTotal := make([]int, 5)
-		for i := 0; i < 5; i++ {
+		columnTotal := make([]int, CardSize)
+		for i := 0; i < CardSize; i++ {
 			for j, colScores := range scoreCard {
 				if colScores[j] == 1 {
 					columnTotal[i]++
 				}
-				if columnTotal[i] == 5 {
-					return true
+				if columnTotal[i] == CardSize {
+					won = true
 				}
 			}
 		}
 	}
-	return false
+	return
 }
 
 func calculateScore(scoreCard ScoreCard, board Board, number int) int {
@@ -106,22 +108,22 @@ func calculateScore(scoreCard ScoreCard, board Board, number int) int {
 	return number * total
 }
 
-func parseNumbers(lines []string) []int {
+func parseNumbers(lines []string) (numbers []int) {
 	parts := strings.Split(lines[0], ",")
-	numbers := make([]int, len(parts))
+	numbers = make([]int, len(parts))
 	for i, part := range parts {
 		integer, _ := strconv.Atoi(part)
 		numbers[i] = integer
 	}
-	return numbers
+	return
 }
 
-func parseBoardNumbers(line string) []int {
-	boardNumbers := make([]int, 5)
+func parseBoardNumbers(line string) (boardNumbers []int) {
+	boardNumbers = make([]int, CardSize)
 	line = strings.Trim(strings.Replace(line, "  ", " ", -1), " ")
 	for i, split := range strings.Split(line, " ") {
-		imt, _ := strconv.Atoi(split)
-		boardNumbers[i] = imt
+		integer, _ := strconv.Atoi(split)
+		boardNumbers[i] = integer
 	}
-	return boardNumbers
+	return
 }
