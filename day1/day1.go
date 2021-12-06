@@ -6,9 +6,8 @@ import (
 )
 
 func main() {
-	input := common.ReadIntegers("day1.values")
-	fmt.Println(calculateIncrements(input, 1))
-	fmt.Println(calculateIncrements(input, 3))
+	input := common.ReadIntegers("input.txt")
+	fmt.Println(calculateIncrements(input, 1), calculateIncrements(input, 3))
 }
 
 func calculateIncrements(depths []int, offset int) (increments int) {

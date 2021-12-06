@@ -7,43 +7,35 @@ import (
 	"strings"
 )
 
-const Forward = "forward"
-const Up = "up"
-const Down = "down"
-
 func main() {
-	input := common.ReadStrings("day2.values")
-	fmt.Println(calculatePath(input, false))
-	fmt.Println(calculatePath(input, true))
+	input := common.ReadStrings("input.txt")
+	fmt.Println(calculatePath(input, false), calculatePath(input, true))
 }
 
 func calculatePath(values []string, withAim bool) int {
-	x := 0
-	y := 0
-	aim := 0
+	var x, y, aim int
 
 	for _, command := range values {
 		parts := strings.Split(command, " ")
 		direction := fmt.Sprint(parts[0])
 		steps, _ := strconv.Atoi(parts[1])
-
 		if withAim {
 			switch direction {
-			case Forward:
+			case "forward":
 				x += steps
 				y += aim * steps
-			case Up:
+			case "up":
 				aim -= steps
-			case Down:
+			case "down":
 				aim += steps
 			}
 		} else {
 			switch direction {
-			case Forward:
+			case "forward":
 				x += steps
-			case Up:
+			case "up":
 				y -= steps
-			case Down:
+			case "down":
 				y += steps
 			}
 		}

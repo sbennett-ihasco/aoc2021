@@ -14,7 +14,7 @@ type Board [][]int
 type ScoreCard [CardSize][CardSize]int
 
 func main() {
-	input := common.ReadStrings("day4.values")
+	input := common.ReadStrings("input.txt")
 
 	numbers := parseNumbers(input)
 	input = input[1:]
@@ -31,13 +31,11 @@ func main() {
 		}
 	}
 
-	fmt.Println(play(numbers, boards, scoreCards, true))
-	fmt.Println(play(numbers, boards, scoreCards, false))
+	fmt.Println(play(numbers, boards, scoreCards, true), play(numbers, boards, scoreCards, false))
 }
 
 func play(numbers []int, boards []Board, scoreCards []ScoreCard, stopOnFirstWin bool) (score int) {
-	score = 0
-	scoreCount := 0
+	var scoreCount int
 	var scores []int
 
 	for _, number := range numbers {

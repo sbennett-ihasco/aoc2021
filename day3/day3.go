@@ -9,7 +9,7 @@ import (
 var bits int
 
 func main() {
-	input := common.ReadStrings("day3.values")
+	input := common.ReadStrings("input.txt")
 
 	bits = len(input[0])
 
@@ -19,20 +19,10 @@ func main() {
 		integers[i] = int(converted)
 	}
 
-	fmt.Println(part1(integers))
-	fmt.Println(part2(integers))
-}
-
-func part1(integers []int) int {
-	most := mostOrLeastCommon(integers, true)
-	least := mostOrLeastCommon(integers, false)
-	return most * least
-}
-
-func part2(integers []int) int {
-	most := reduceByMostOrLeastCommon(integers, true)
-	least := reduceByMostOrLeastCommon(integers, false)
-	return most * least
+	fmt.Println(
+		mostOrLeastCommon(integers, true)*mostOrLeastCommon(integers, false),
+		reduceByMostOrLeastCommon(integers, true)*reduceByMostOrLeastCommon(integers, false),
+	)
 }
 
 func mostOrLeastCommon(integers []int, mostCommon bool) (match int) {
